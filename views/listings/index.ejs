@@ -101,7 +101,14 @@
     </div>
   </div>
 </div>
-<div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3  mt-3">
+
+<!-- Filters Sidebar -->
+<div class="row">
+  <div class="col-md-3">
+    <%- include("../includes/filters.ejs") %>
+  </div>
+  <div class="col-md-9">
+    <div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 mt-3">
   <% for(listing of allListings) { %>
     <a href="/listings/<%= listing._id %>" class="listing-link">
       <div class="card listing-card">
@@ -124,6 +131,14 @@
       </div>
     </a>
   <% } %>
+  <% if (allListings.length === 0) { %>
+    <div class="col-12 text-center mt-5">
+      <h4>No listings found matching your filters.</h4>
+      <p>Try adjusting your filter criteria or <a href="/listings">clear all filters</a>.</p>
+    </div>
+  <% } %>
+</div>
+</div>
 </div>
 
 

@@ -6,6 +6,12 @@
     width: 9vw;
     top: 40vh;
     left: calc(50% - 68px);
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
 }
 
 .pl {
@@ -41,6 +47,7 @@
   .pl__ring-stroke {
     animation-name: ringStroke42;
     transform: rotate(-45deg);
+    filter: drop-shadow(0 0 10px rgba(254, 66, 77, 0.5));
   }
   
   .pl__tick {

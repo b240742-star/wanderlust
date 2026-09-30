@@ -1,10 +1,15 @@
 const Listing = require("../models/listing");
+const { buildListingQuery } = require("../utils/filters.js");
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({accessToken: mapToken});
 
 module.exports.index = async (req, res) => {
-    const allListings = await Listing.find({});
+    console.log('Query params:', req.query);
+    const query = buildListingQuery(req.query);
+    console.log('Built query:', query);
+    const allListings = await Listing.find(query);
+    console.log('Found listings:', allListings.length);
     res.render("listings/index.ejs", { allListings });
 };
 

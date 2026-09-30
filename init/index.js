@@ -1,23 +1,16 @@
-require("dotenv").config({ path: "../.env" });
-
+const path = require("path");
+require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 
 const mongoose = require("mongoose");
 const initdata = require("./data.js");
 const Listing = require("../models/listing.js");
 
-// const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
- const DB_URL = process.env.ATLASDB_URL;
- 
-main()
-    .then(() => {
-    console.log("connected to DB");
-    })
-    .catch((err) => {
-        console.log(err);
-    })
+const DB_URL = process.env.ATLASDB_URL;
 
 async function main() {
-    // await mongoose.connect(MONGO_URL);
+    if (!DB_URL) {
+        throw new Error("ATLASDB_URL is not defined in .env");
+    }
     await mongoose.connect(DB_URL);
 }
 
@@ -26,4 +19,12 @@ const initDB = async () => {
     console.log("Data was initialized");
 };
 
-initDB();
+main()
+    .then(async () => {
+        console.log("connected to DB");
+        await initDB();
+        await mongoose.disconnect();
+    })
+    .catch((err) => {
+        console.log(err);
+    });

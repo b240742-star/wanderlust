@@ -35,14 +35,46 @@
                 <b>Location : </b>
                 <%= listing.location %>
             </p>
-            <p class="card-text">
+           <p class="card-text">
                 <b>Country : </b>
                 <%= listing.country %>
             </p>
         </div>
     </div>
     <br>
-    <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
+
+    <!-- ▼▼▼ NEW BOOKING BLOCK STARTS HERE ▼▼▼ -->
+    <% if(currUser) { %>
+    <div class="col-sm-8 offset-sm-2 mb-3 mt-3">
+        <div class="booking-card">
+            <h4>Book this place</h4>
+            <form action="/listings/<%= listing._id %>/bookings" method="POST" novalidate class="needs-validation">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label" for="checkIn">Check-in</label>
+                        <input type="date" class="form-control" name="booking[checkIn]" id="checkIn" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label" for="checkOut">Check-out</label>
+                        <input type="date" class="form-control" name="booking[checkOut]" id="checkOut" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label" for="guests">Guests</label>
+                        <input type="number" class="form-control" name="booking[guests]" id="guests" min="1" value="1" required>
+                    </div>
+                </div>
+                <button class="book-btn">Book Now</button>
+            </form>
+        </div>
+    </div>
+    <% } else { %>
+    <div class="col-sm-8 offset-sm-2 mb-3 mt-3">
+        <a href="/login">Log in</a> to book this place.
+    </div>
+    <% } %>
+    <!-- ▲▲▲ NEW BOOKING BLOCK ENDS HERE ▲▲▲ -->
+
+    <% if(currUser && listing.owner && listing.owner._id.equals(currUser._id)) { %>
         <div class="btns">
             <a href="/listings/<%= listing._id %>/edit" class="col-sm-1 offset-sm-2">
                 <button class="edit-btn">
@@ -109,7 +141,7 @@
                             </p>
                         </div>
 
-                        <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
+                        <% if(currUser && listing.owner && listing.owner._id.equals(currUser._id)) { %>
                             <form method="POST"
                             action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
                             class="p-2 my-3 mb-3">

@@ -1,0 +1,23 @@
+<% layout("/layouts/boilerplate") %>
+<div class="row mt-3">
+    <div class="col-sm-8 offset-sm-2">
+        <h3>My Bookings</h3>
+        <% if(bookings.length === 0) { %>
+            <p>You have no bookings yet.</p>
+        <% } %>
+        <% for(booking of bookings) { %>
+            <div class="booking-card mb-3">
+                <h5><%= booking.listing.title %></h5>
+                <p>Check-in: <%= booking.checkIn.toDateString() %> | Check-out: <%= booking.checkOut.toDateString() %></p>
+                <p>Guests: <%= booking.guests %> | Total: &#8377; <%= booking.totalPrice.toLocaleString("en-IN") %></p>
+                <p>Status: <%= booking.status %></p>
+                <a href="/listings/<%= booking.listing._id %>">View Listing</a>
+                <% if(booking.status !== "cancelled") { %>
+                    <form action="/bookings/<%= booking._id %>/cancel" method="POST">
+                        <button class="btn btn-outline-light mt-2">Cancel</button>
+                    </form>
+                <% } %>
+            </div>
+        <% } %>
+    </div>
+</div>

@@ -20,3 +20,15 @@
       }, false)
     })
   })()
+  window.addEventListener("pageshow", function (event) {
+  if (event.persisted) {
+    document.querySelector(".loader").style.display = "none";
+    document.querySelector(".pageblur").style.opacity = "1";
+    document.querySelectorAll('.needs-validation').forEach(form => {
+      form.classList.remove('was-validated');
+    });
+    document.querySelectorAll('button[disabled]').forEach(btn => {
+      btn.disabled = false;
+    });
+  }
+});

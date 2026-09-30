@@ -94,8 +94,8 @@
     min-height: 8rem;
     min-width: 10rem;
     padding: 1.5rem;
-    background-color: white;
-    border: 1px solid rgba(0, 0, 0, 0.201);
+    background-color: rgba(26, 26, 26, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
     gap: 0.5rem;
@@ -107,6 +107,10 @@
 
   .nav-profile a:hover {
     color: #fe424d;
+  }
+
+  .nav-profile .nav-link {
+    color: #ffffff;
   }
 
 </style>
@@ -142,8 +146,11 @@
     </label>
 
     <div class="navbar-collapse" id="navbarNavAltMarkup">
-      <div class="nav-profile">
+     <div class="nav-profile">
         <a class="nav-link" href="/listings/new">Airbnb your home</a>
+        <% if(currUser) { %>
+        <a class="nav-link" href="/bookings">My Bookings</a>
+        <% } %>
         <% if(!currUser) { %>
         <a class="nav-link" href="/signup"><b>Sign up</b></a>
         <a class="nav-link" href="/login"><b>Log in</b></a>

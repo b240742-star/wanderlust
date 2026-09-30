@@ -1,6 +1,7 @@
 const Listing = require("./models/listing");
 const Review = require("./models/review");
-const {listingSchema, reviewSchema} = require("./schema.js");
+const {listingSchema, reviewSchema, bookingSchema} = require("./schema.js");
+const Booking = require("./models/booking");
 const ExpressError = require("./utils/ExpressError.js");
 
 module.exports.isLoggedIn = (req, res, next) => {
@@ -65,5 +66,24 @@ module.exports.isReviewAuthor = async (req, res, next) => {
         return res.redirect(`/listings/${id}`);
     }
 
+    next();
+}
+module.exports.validateBooking = (req, res, next) => {
+    let { error } = bookingSchema.validate(req.body);
+    if (error) {
+        let errMsg = error.details.map((el) => el.message).join(",");
+        throw new ExpressError(400, errMsg);
+    } else {
+        next();
+    }
+}
+
+module.exports.isBookingOwner = async (req, res, next) => {
+    let { bookingId } = req.params;
+    let booking = await Booking.findById(bookingId);
+    if (!booking.user.equals(res.locals.currUser._id)) {
+        req.flash("error", "You are not authorized to do that");
+        return res.redirect("/bookings");
+    }
     next();
 }
