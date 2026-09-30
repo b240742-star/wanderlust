@@ -1,4 +1,4 @@
-# HeavanHub
+# Wanderlust
 
 ![Heavanhub](./public/icon/Screenshot%20-%20wanderlust.png)
 
